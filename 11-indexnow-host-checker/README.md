@@ -1,0 +1,5 @@
+# 11 — IndexNow said 403 (the host already had a key)
+
+**Real failure:** submitting DomainGuard URLs to IndexNow under the fleet key returned a deterministic **403 `UserForbiddedToAccessSite`** — twice — even though the fleet key file served live (200, exact body). The host was already bound to DomainGuard's own pre-existing key (the one its in-app auto-submitter uses) and rejects a second key. **Fix applied:** DomainGuard's 22 sitemap URLs resubmitted under its own key → HTTP 200. The same wave's research also chased a "homepage missing from the sitemap" report for BreachHunter — live re-check showed the homepage IS the sitemap's first URL, so no code fix was made on a false claim. Sources: `hidden_files/gsc-indexing-fix-report.md`, `hidden_files/TIM-GABE-CAPSTONE-NITS-CHECKPOINT-2026-11-13.md`, `hidden_files/GSC-IMPLEMENT-CHECKPOINT-2026-11-13.md`.
+
+**This tool** checks both halves on fixtures: sitemap-contains-homepage, and key consistency (served body vs submitted key vs the key the host is bound to). Run: `python3 tool.py`.
